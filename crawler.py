@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 import time
 
+
 options = Options()
 options.headless = True
 options.add_experimental_option("detach", True)
@@ -25,19 +26,41 @@ cookies.click()
 
 print(f"Page title is: {driver.title}")
 
+#-------------------------ACCESSING NECESSARY ELEMENTS FOR DATA PARSING--------------------------
 
+# DATE, TIME, LOCATION
 information_array = []
 i = 1
 while i >= 1:
     try:
-        data_point = [driver.find_element(By.XPATH, f'html/body/div[4]/main/section/ul/li[{i}]/div/div/div[2]/div[2]').text]
-        information_array.append(data_point)
+        information_array.append(driver.find_element(By.XPATH, f'html/body/div[4]/main/section/ul/li[{i}]/div/div/div[2]/div[2]').text)
         # print(data_point)
         i+= 1
     except:
         # print("Function cycle ended at: %d, no more entries found" %i)
         break
 
-print(information_array[0])
+for div in range(len(information_array)):
+    information_array[div] = information_array[div].split('|')
+
+
+print(information_array[0], information_array[23])
+
+#TITLE & ARTIST
+title_artist_array = []
+t = 1
+#Using the same iterator variable i
+while t >= 1:
+    try:
+        title_artist_array.append(driver.find_element(By.XPATH, f'/html/body/div[4]/main/section/ul/li[{t}]/div/div/div[2]/p/a').text)
+        # print(f"Array iteration: {x}")
+        t += 1
+    except:
+        break
+
+print(title_artist_array[0])
+
+
+
 
 
