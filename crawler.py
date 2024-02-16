@@ -44,7 +44,7 @@ for div in range(len(information_array)):
     information_array[div] = information_array[div].split('|')
 
 
-print(information_array[0], information_array[23])
+# print(information_array[0], information_array[23])
 
 #TITLE & ARTIST
 title_artist_array = []
@@ -58,9 +58,25 @@ while t >= 1:
     except:
         break
 
-print(title_artist_array[0])
+# print(title_artist_array[0])
 
 
+#IMAGE LINK
+image_link_array = []
+l = 1
+while l >= 1:
+    try:
+        #Concatenating the HTTP address with the srcset attribute value to generate URL
+        image_link_array.append("https://www.lucernefestival.ch" + driver.find_element(By.XPATH, f'/html/body/div[4]/main/section/ul/li[{l}]/div/div/div[1]/a/figure/picture/source[1]').get_attribute('srcset'))
+        print(f"Array iteration: {l}")
+        l += 1
+    except:
+        break
+
+
+# image_source_test = driver.find_element(By.XPATH, '/html/body/div[4]/main/section/ul/li[1]/div/div/div[1]/a/figure/picture/source[1]').get_attribute('srcset')
+
+# print(image_link_array[36])
 
 
 
