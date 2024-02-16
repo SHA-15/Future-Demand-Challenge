@@ -85,7 +85,7 @@ for event_entry in range(1, len(events_list)+1):
 
             #Add the dict to the array
             name_and_works_array.append(name_works_dict)
-            print(name_and_works_array)
+            #print(name_and_works_array)
 
             #Return Back to the performers page for next performer_data
             driver.execute_script("window.history.go(-1)")
@@ -93,14 +93,24 @@ for event_entry in range(1, len(events_list)+1):
             print("I have returned back!")
             #WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, f"/html/body/div[4]/main/section/ul/li[{event_entry}]/div/div/div[2]/p/a")))
 
-        except Exception as e:
-            print(e)
-            break
+        #To Deal with entries that do not contain the works data and to continue to loop,ensuring no pre_entries can be made
+        except:
+            #Create the dictionary to enter names and works to null
+            null_name = WebDriverWait(driver, 3).until(EC.presence_of_element_located((By.XPATH, f"/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li[{performer}]/strong")))
+            null_name_works_dict = {"name" : null_name.text, "works": "null"}
+
+            #Append to array
+            name_and_works_array.append(null_name_works_dict)
+
+            print(null_name_works_dict)
+            continue
 
     #Now we need to traverse back to the event page to start the second iteration of the events
     driver.execute_script("window.history.go(-1)")
     time.sleep(5)
     print(f"Starting the iteration after event_entry {event_entry}")
+
+print(name_and_works_array[-1])
 
 
 
