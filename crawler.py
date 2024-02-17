@@ -64,12 +64,12 @@ for div in range(len(information_array)):
         information_array[div][sub_index] = information_array[div][sub_index].split("Program")[0].strip()
         information_array[div][sub_index] = information_array[div][sub_index].split("Summer")[0].strip()
 
-print(information_array)
+#print(information_array)
 
 #TITLE & ARTIST
 title_artist_array = []
 t = 1
-#Using the same iterator variable i
+
 while t >= 1:
     try:
 
@@ -82,6 +82,8 @@ while t >= 1:
     except:
         break
 
+#print(title_artist_array)
+
 #IMAGE LINK
 image_link_array = []
 l = 1
@@ -90,9 +92,10 @@ while l >= 1:
 
         #Concatenating the HTTP address with the srcset attribute value to generate URL
         image_link_array.append("https://www.lucernefestival.ch" + driver.find_element(By.XPATH, f'/html/body/div[4]/main/section/ul/li[{l}]/div/div/div[1]/a/figure/picture/source[1]').get_attribute('srcset'))
-
         #print(f"Array iteration: {l}")
 
         l += 1
     except:
         break
+
+print(image_link_array)
