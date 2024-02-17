@@ -114,7 +114,6 @@ event_information_df = pd.DataFrame(
     }
 )
 
-
 print(event_information_df)
 #--------------------------------Event Title----------------------------------------------
 title_df = pd.DataFrame(
@@ -124,7 +123,6 @@ title_df = pd.DataFrame(
 )
 
 print(title_df)
-
 #--------------------------------Image Links-----------------------------------------------
 image_df = pd.DataFrame(
     {
