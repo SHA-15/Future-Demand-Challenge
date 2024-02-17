@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bb9c9ef6-d5b7-4eac-b2d7-3fe46ef9c620" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postgres_connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/postgres_connection.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,10 +145,10 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.crawler" />
-      <item itemvalue="Python.information_array" />
       <item itemvalue="Python.crawler (1)" />
+      <item itemvalue="Python.crawler" />
       <item itemvalue="Python.crawlerloop" />
+      <item itemvalue="Python.information_array" />
       <item itemvalue="Python.test" />
     </list>
     <recent_temporary>
