@@ -41,9 +41,9 @@ events_list = driver.find_elements(By.XPATH, "/html/body/div[4]/main/section/ul/
 name_and_works_array = []
 for event_entry in range(1, len(events_list)+1):
     #Go to the specified Event
-    print(f"Starting the iteration with {event_entry}")
+    #print(f"Starting the iteration with {event_entry}")
     events_page = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, f"/html/body/div[4]/main/section/ul/li[{event_entry}]/div/div/div[2]/p/a")))
-    print(f"/html/body/div[4]/main/section/ul/li[{event_entry}]/div/div/div[2]/p/a")
+    #print(f"/html/body/div[4]/main/section/ul/li[{event_entry}]/div/div/div[2]/p/a")
 
     #Take a Breather
     time.sleep(2)
@@ -55,23 +55,23 @@ for event_entry in range(1, len(events_list)+1):
     performers_list = driver.find_elements(By.XPATH, "/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li")
 
     #Traverse the list of performers
-    print(len(performers_list))
+    #print(len(performers_list))
     for performer in range(1, len(performers_list) + 1):
         #Go through the performers page
         try:
-            print("Trying the loop with the given condition")
+            #print("Trying the loop with the given condition")
             performer_page = WebDriverWait(driver, 3).until(EC.element_to_be_clickable((By.XPATH, f"/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li[{performer}]/strong/a")))
-            print(f"Gotten the page with performer value {performer}")
-            print(f"/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li[{performer}]/strong")
+            #print(f"Gotten the page with performer value {performer}")
+            #print(f"/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li[{performer}]/strong")
             #Take a Breather
             time.sleep(5)
 
             #Move to Page
-            print("Trying to click")
+            #print("Trying to click")
             driver.execute_script("arguments[0].scrollIntoView();", performer_page)
             driver.execute_script("arguments[0].click();", performer_page)
             #Time to Extract Name and Tasks
-            print("I have moved to the performer page")
+            #print("I have moved to the performer page")
 
             #Take a Breather
             time.sleep(5)
@@ -81,7 +81,7 @@ for event_entry in range(1, len(events_list)+1):
 
             #Create dictionary to extract tasks
             name_works_dict = {"name": name.text, "works": works.get_attribute("innerText")}
-            print(name_works_dict)
+            #print(name_works_dict)
 
             #Add the dict to the array
             name_and_works_array.append(name_works_dict)
@@ -90,7 +90,7 @@ for event_entry in range(1, len(events_list)+1):
             #Return Back to the performers page for next performer_data
             driver.execute_script("window.history.go(-1)")
             time.sleep(4)
-            print("I have returned back!")
+            #print("I have returned back!")
             #WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.XPATH, f"/html/body/div[4]/main/section/ul/li[{event_entry}]/div/div/div[2]/p/a")))
 
         #To Deal with entries that do not contain the works data and to continue to loop,ensuring no pre_entries can be made
@@ -102,15 +102,15 @@ for event_entry in range(1, len(events_list)+1):
             #Append to array
             name_and_works_array.append(null_name_works_dict)
 
-            print(null_name_works_dict)
+            #print(null_name_works_dict)
             continue
 
     #Now we need to traverse back to the event page to start the second iteration of the events
     driver.execute_script("window.history.go(-1)")
     time.sleep(5)
-    print(f"Starting the iteration after event_entry {event_entry}")
+    #print(f"Starting the iteration after event_entry {event_entry}")
 
-print(name_and_works_array[-1])
+print(name_and_works_array)
 
 
 
