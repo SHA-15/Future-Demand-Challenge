@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import time
+import pandas as pd
+from datetime import datetime
 
 # Set Chrome options
 options = Options()
@@ -110,7 +112,15 @@ for event_entry in range(1, len(events_list)+1):
     time.sleep(5)
     #print(f"Starting the iteration after event_entry {event_entry}")
 
-print(name_and_works_array)
+#print(name_and_works_array)
+
+driver.close()
+
+names_and_works_df = pd.DataFrame(name_and_works_array)
+
+print(names_and_works_df)
+names_and_works_df.to_csv(r"C:\Users\Izrum\Desktop\nandw.csv")
+
 
 
 

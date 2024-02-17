@@ -6,12 +6,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 import time
-import pandas as pd
-import numpy as np
 from datetime import datetime
-
 import pandas as pd
-import numpy as np
+import psycopg2
+
 
 #Set Dataframe visibility
 pd.set_option("display.max_colwidth", None)
@@ -114,7 +112,7 @@ event_information_df = pd.DataFrame(
     }
 )
 
-print(event_information_df)
+#print(event_information_df)
 #--------------------------------Event Title----------------------------------------------
 title_df = pd.DataFrame(
     {
@@ -122,7 +120,7 @@ title_df = pd.DataFrame(
     }
 )
 
-print(title_df)
+#print(title_df)
 #--------------------------------Image Links-----------------------------------------------
 image_df = pd.DataFrame(
     {
@@ -130,4 +128,6 @@ image_df = pd.DataFrame(
     }
 )
 
-print(image_df)
+
+driver.close()
+
