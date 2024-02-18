@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb9c9ef6-d5b7-4eac-b2d7-3fe46ef9c620" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/izz.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/crawler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/crawlerloop.py" beforeDir="false" afterPath="$PROJECT_DIR$/crawlerloop.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postgres_connection.py" beforeDir="false" afterPath="$PROJECT_DIR$/postgres_connection.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/python_crawler.py" beforeDir="false" afterPath="$PROJECT_DIR$/python_crawler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +39,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Python.crawlerloop">
+  <component name="RunManager" selected="Python.python_crawler">
     <configuration name="crawler (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Future-Demand-Challenge" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -128,7 +124,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="python_crawler" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Future-Demand-Challenge" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -140,7 +136,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python_crawler.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -153,16 +149,16 @@
       <item itemvalue="Python.crawler (1)" />
       <item itemvalue="Python.crawler" />
       <item itemvalue="Python.crawlerloop" />
-      <item itemvalue="Python.test" />
       <item itemvalue="Python.izz" />
+      <item itemvalue="Python.python_crawler" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.python_crawler" />
         <item itemvalue="Python.crawlerloop" />
         <item itemvalue="Python.crawler (1)" />
         <item itemvalue="Python.crawler" />
         <item itemvalue="Python.izz" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
