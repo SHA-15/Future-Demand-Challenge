@@ -15,4 +15,12 @@ Reason for choosing Selenium over other frameworks:
 
 The Program Structure:
 
+The entire program is broken down into 3 Distinct Elements:
+1. Two-Part Data Access Process
+2. Data Manipulation and Cleansing (Utilizing Pandas)
+3. Data Load to PostgreSQL
+
+![image](https://github.com/SHA-15/Future-Demand-Challenge/assets/148129383/bcaab539-f51c-49b6-9246-5683cf5abc6c)
+
+
 
