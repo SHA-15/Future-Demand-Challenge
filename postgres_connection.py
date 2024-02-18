@@ -38,7 +38,7 @@ for loc_index in range(len(x)):
 #-----------------------CREATE DATAFRAME OBJECTS FOR EVENT, LOCATION, PERFORMERS------------------
 location_df = pd.DataFrame(
     {
-        "location": locations_list
+        "event_location": locations_list
     }
 )
 
@@ -86,7 +86,7 @@ event_df = pd.DataFrame(
 
 names_works_df = pd.read_csv(r"C:\Users\Izrum\Desktop\nandw.csv")
 #-----------------------------READY DATAFRAME OBJECTS FOR POSTGRES PARSING----------------
-location_df = location_df.drop_duplicates(subset="location", keep="first")
+location_df = location_df.drop_duplicates(subset="event_location", keep="first")
 location_df.insert(0, "location_id", range(1, 1+len(location_df)))
 location_df.reset_index(drop=True, inplace=True)
 
@@ -95,6 +95,7 @@ event_df.insert(0, "event_id", range(10000, 10000+len(event_df)))
 
 names_works_df = names_works_df.drop_duplicates(subset = "name", keep="first")
 names_works_df = names_works_df.rename(columns={"Unnamed: 0" : "performer_id"})
+names_works_df = names_works_df.rename(columns={"name" : "event_performer"})
 names_works_df["performer_id"] = range(100, 100 + len(names_works_df))
 names_works_df.reset_index(drop=True, inplace=True)
 #--------------------------------Build Connection To POSTGRES-----------------------------
@@ -113,7 +114,6 @@ def establish_connection(database_value="FutureDemand", user_value="postgres", p
 
     return connection
 
-
 def tables_creation():
     # Creating Tables
     tables = (
@@ -125,8 +125,7 @@ def tables_creation():
         """,
         """
         CREATE TABLE performer (
-            id SERIAL PRIMARY KEY,
-            name VARCHAR(256) NOT NULL,
+            name VARCHAR(256) NOT NULL PRIMARY KEY,
             works TEXT
         )
         """,
@@ -136,8 +135,8 @@ def tables_creation():
             event_name VARCHAR(256) NOT NULL,
             event_date TEXT NOT NULL,
             event_time TEXT NOT NULL,
-            location VARCHAR(256) NOT NULL,
-            performer VARCHAR(256) NOT NULL,
+            event_location VARCHAR(256) NOT NULL,
+            performer_name VARCHAR(256) REFERENCES performer (name),
             event_image TEXT NOT NULL            
         )
         """
@@ -145,11 +144,23 @@ def tables_creation():
 
     try:
         for table in tables:
-            cursor.execute(table)
-            print("Table Creation Complete")
-
+            cursor.execute(
+                """
+                SELECT EXISTS (
+                    SELECT 1
+                    FROM information_schema.tables
+                    WHERE table_name = %s
+                )
+                """, (table.split()[2],)
+            )
+            table_exists = cursor.fetchone()[0]
+            if table_exists:
+                print("Table already exists")
+            else:
+                cursor.execute(table)
+                print("Table Creation Complete")
             #Allow Delay between Creations
-            time.sleep(5)
+            time.sleep(2)
 
         print("Tables created successfully")
 
@@ -161,7 +172,7 @@ def tables_creation():
 #MOVING LOCATION DATAFRAME TO LOCATION TABLE in POSTGRES
 def location_data():
     for index in range(0, len(location_df)):
-        values = (int(location_df["location_id"][index]), location_df["location"][index])
+        values = (int(location_df["location_id"][index]), location_df["event_location"][index])
         print(f"starting index with value: {index}")
         cursor.execute("INSERT INTO location (id, location_name) VALUES (%s, %s)", values)
         print(f"success, Let's Keep on Going!")
@@ -173,11 +184,11 @@ def location_data():
 #MOVING NAME WORKS DATAFRAME TO PERFORMER TABLE IN POSTGRES
 def works_data():
     for index in range(0, len(names_works_df)):
-        values = (int(names_works_df["performer_id"][index]), names_works_df["name"][index], names_works_df["works"][index])
+        values = (int(names_works_df["performer_id"][index]), names_works_df["event_performer"][index], names_works_df["works"][index])
         print(f"starting index with value: {index}")
         cursor.execute("INSERT INTO performer (id, name, works) VALUES (%s, %s, %s)", values)
         print(f"success, Let's Keep on Going!")
-        time.sleep(5)
+        time.sleep(2)
 
     conn.commit()
     print("Performer Records updated!")
@@ -198,27 +209,39 @@ def event_data():
         cursor.execute("""INSERT INTO event (id, event_name, event_date, event_time, location, performer, event_image) 
                        VALUES (%s, %s, %s, %s, %s, %s, %s)""", values)
         print(f"success, Let's Keep on Going!")
-        time.sleep(5)
+        time.sleep(2)
 
     conn.commit()
     print("event records updated")
 
 
 #--------------------------------COMMAND EXECUTION FOR POSTGRES-----------------------------------
-conn = establish_connection()
-cursor = conn.cursor()
-
-tables_creation()
-
-# time.sleep(2)
-
+# conn = establish_connection()
+# cursor = conn.cursor()
+#
+# tables_creation()
+#
+# # time.sleep(2)
+#
 # location_data()
-#
-# time.sleep(2)
-#
+# #
+# # time.sleep(2)
+# #
 # works_data()
+# #
+# # time.sleep(2)
 #
-# time.sleep(2)
+# event_data()
 
-event_data()
+event_df = event_df.merge(location_df, on="event_location", how="left")
+event_df.drop("event_location", axis=1)
+
+# event_df = event_df.merge(names_works_df["performer_id"], on="event_performer", how="left")
+print(event_df.dtypes)
+print(names_works_df.dtypes)
+event_df.to_csv(r"C:\Users\Izrum\Desktop\events.csv")
+
+
+
+
 
