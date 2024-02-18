@@ -260,8 +260,7 @@ lucerne_crawler.convert_performer_works_df()
 lucerne_crawler.create_df()
 lucerne_crawler.driver.close()
 lucerne_crawler.postgres_readiness()
-print(lucerne_crawler.performer_works_df[["event_performer", "performer_id"]])
-lucerne_crawler.event_df.to_csv(r"C:\Users\Izrum\Desktop\events.csv")\
+
 
 #--------------------------------Build Connection To POSTGRES-----------------------------
 def establish_connection(database_value="FutureDemand", user_value="postgres", password="abcd1234", host="localhost"):
@@ -290,8 +289,8 @@ def tables_creation():
         """,
         """
         CREATE TABLE performer (
-            id SERIAL NOT NULL,
-            name VARCHAR(256) NOT NULL PRIMARY KEY,
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(256) NOT NULL,
             works TEXT
         )
         """,
@@ -301,9 +300,9 @@ def tables_creation():
             event_date TEXT NOT NULL,
             event_time TEXT NOT NULL,
             event_title VARCHAR(256) NOT NULL,
-            event_performer VARCHAR(256),
             event_image TEXT NOT NULL,
-            event_location_id INTEGER NOT NULL            
+            location_id SERIAL REFERENCES location (id),
+            performer_id SERIAL REFERENCES performer (id)          
         )
         """
     )
@@ -367,13 +366,12 @@ def event_data(object):
             object.event_df["event_date"][index],
             object.event_df["event_time"][index],
             object.event_df["event_title"][index],
-            object.event_df["event_performer"][index],
             object.event_df["event_image"][index],
-            object.event_df["location_id"][index]
+            int(object.event_df["location_id"][index]),
+            int(object.event_df["performer_id"][index])
         )
         print(f"starting index with value: {index}")
-        cursor.execute("""INSERT INTO event (id, event_date, event_time, event_title,
-                        event_performer, event_image, event_location_id)
+        cursor.execute("""INSERT INTO event (id,event_date,event_time,event_title,event_image,location_id,performer_id)
                         VALUES (%s, %s, %s, %s, %s, %s, %s)""", values)
         print(f"success, Let's Keep on Going!")
         time.sleep(2)
@@ -381,15 +379,15 @@ def event_data(object):
     conn.commit()
     print("event records updated")
 # #--------------------------------COMMAND EXECUTION FOR POSTGRES-----------------------------------
-# conn = establish_connection()
-# cursor = conn.cursor()
-# tables_creation()
-#time.sleep(2)
-# location_data(lucerne_crawler)
-#time.sleep(2)
-# works_data(lucerne_crawler)
-#time.sleep(2)
-# event_data(lucerne_crawler)
+conn = establish_connection()
+cursor = conn.cursor()
+tables_creation()
+# time.sleep(2)
+location_data(lucerne_crawler)
+# time.sleep(2)
+performer_works_data(lucerne_crawler)
+# time.sleep(2)
+event_data(lucerne_crawler)
 
 
 
