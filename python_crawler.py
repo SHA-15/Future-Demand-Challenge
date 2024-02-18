@@ -5,6 +5,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from chromedriver_py import binary_path
+
 
 # DATA PROCESSING ELEMENTS
 import psycopg2
@@ -21,7 +23,8 @@ class Webcrawler:
         # Set Chrome options
         self.options = Options()
         self.options.add_experimental_option("detach", True)
-        self.service = Service(r".\chromedriver\chromedriver.exe")
+        self.options.add_argument('--headless')
+        self.service = webdriver.ChromeService(executable_path=binary_path)
         self.driver = webdriver.Chrome(service=self.service, options=self.options)
         self.information_array = []
         self.title_array = []
@@ -338,10 +341,10 @@ def tables_creation():
 def location_data(object):
     for index in range(0, len(object.location_df)):
         values = (int(object.location_df["location_id"][index]), object.location_df["event_location"][index])
-        print(f"starting index with value: {index}")
+        print(f"Location data addition entry# {index}")
         cursor.execute("INSERT INTO location (id, location_name) VALUES (%s, %s)", values)
-        print(f"success, Let's Keep on Going!")
-        time.sleep(2)
+        print(f"Location added at entry!")
+        time.sleep(1)
 
     print("Location Records updated!")
     conn.commit()
@@ -350,10 +353,10 @@ def location_data(object):
 def performer_works_data(object):
     for index in range(0, len(object.performer_works_df)):
         values = (int(object.performer_works_df["performer_id"][index]), object.performer_works_df["event_performer"][index], object.performer_works_df["works"][index])
-        print(f"starting index with value: {index}")
+        print(f"Performer data addition entry# {index}")
         cursor.execute("INSERT INTO performer (id, name, works) VALUES (%s, %s, %s)", values)
-        print(f"success, Let's Keep on Going!")
-        time.sleep(2)
+        print(f"Performer added at entry!")
+        time.sleep(1)
 
     conn.commit()
     print("Performer Records updated!")
@@ -370,11 +373,11 @@ def event_data(object):
             int(object.event_df["location_id"][index]),
             int(object.event_df["performer_id"][index])
         )
-        print(f"starting index with value: {index}")
+        print(f"event data at entry# {index}")
         cursor.execute("""INSERT INTO event (id,event_date,event_time,event_title,event_image,location_id,performer_id)
                         VALUES (%s, %s, %s, %s, %s, %s, %s)""", values)
-        print(f"success, Let's Keep on Going!")
-        time.sleep(2)
+        print(f"Event data entry added!")
+        time.sleep(1)
 
     conn.commit()
     print("event records updated")
