@@ -292,3 +292,11 @@ tables_creation()
 #time.sleep(2)
 # event_data()
 
+/html/body/div[4]/main/section/ul/li[{event}]/div/div/div[2]/p/a
+/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li
+
+/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li[{performer}]/strong/a
+/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li[{performer}]/strong/a
+
+/html/body/div[4]/main/section[1]/div[1]/div/div[1]/div/ul/li[1]/strong
+
