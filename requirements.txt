@@ -1,0 +1,4 @@
+chromedriver_py==120.0.6099.109
+pandas==2.2.0
+psycopg2==2.9.9
+selenium==4.17.2
